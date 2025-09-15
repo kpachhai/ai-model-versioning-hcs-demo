@@ -94,8 +94,8 @@ Create `.env`:
 
 ```
 OPERATOR_ID=0.0.xxxxxx
-OPERATOR_KEY=302e0201... (Ed25519 private key string)
-# Optional: reuse a topic
+OPERATOR_KEY=0xe151420c... (Ecdsa hex encoded private key string)
+# Optional: reuse a topic(or leave it blank to create a new topic)
 # TOPIC_ID=0.0.yyyyyyy
 PORT=3000
 ```
@@ -195,19 +195,6 @@ curl -s "https://testnet.mirrornode.hedera.com/api/v1/topics/$TOPIC_ID/messages?
  | jq -r '.messages[].message' \
  | while read b64; do echo "$b64" | base64 --decode; echo; done
 ```
-
----
-
-## Demo Walkthrough Script
-
-1. **Intro**: “We’ll show how to externalize sensitive lifecycle and AI provenance events to a neutral ledger.”
-2. **Topic**: Point at topic ID in UI: “This is the global handle anyone can later audit.”
-3. **Create Application**: Add APP-1001 / 25000 → highlight consensus timestamp after poll.
-4. **Override Decision**: Submit reason. Explain governance accountability.
-5. **Register AI Version**: Provide artifact hash: “Public attestation this exact artifact existed now.”
-6. **Log Evaluation**: Show metrics and pass flag. Emphasize inability to retro-edit.
-7. **Mirror Verification (Terminal)**: Run Mirror Node query; decode messages. “Directly from Hedera—proves UI isn’t faking.”
-8. **Wrap Up**: Summarize benefits & extension paths (signatures, additional event types, analytics).
 
 ---
 

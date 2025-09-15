@@ -144,17 +144,7 @@ Recording overrides as immutable entries creates a **governance trail**:
 
 ---
 
-## 12. Quick Talking Points (Pitch)
-
-- “Every critical state change is a notarized fact.”
-- “Mirror Node queries = trustless verification.”
-- “Model governance becomes externally attestable.”
-- “Override decisions leave immutable governance breadcrumbs.”
-- “Extendable: signatures, encryption, compliance hooks.”
-
----
-
-## 13. When to Use This Pattern
+## 12. When to Use This Pattern
 
 | Scenario                                     | Suitability                          |
 | -------------------------------------------- | ------------------------------------ |
@@ -166,7 +156,7 @@ Recording overrides as immutable entries creates a **governance trail**:
 
 ---
 
-## 14. Next Steps (If Productizing)
+## 13. Next Steps (If Productizing)
 
 1. Add identity & signature per message.
 2. Introduce versioned schema envelope `{schemaVersion, payload}`.
@@ -176,6 +166,6 @@ Recording overrides as immutable entries creates a **governance trail**:
 
 ---
 
-## 15. TL;DR
+## 14. TL;DR
 
 This demo proves how HCS can shift critical decision and AI model provenance data from mutable internal silos to an immutable, low-latency, publicly auditable ledger—raising integrity, trust, and compliance readiness while remaining simple to adopt.
