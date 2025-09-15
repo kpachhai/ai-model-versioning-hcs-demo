@@ -92,6 +92,8 @@ All responses return the event JSON echoed back.
 
 Create `.env`:
 
+Request test hbar on your testnet account at [https://portal.hedera.com/dashboard](https://portal.hedera.com/dashboard)
+
 ```
 OPERATOR_ID=0.0.xxxxxx
 OPERATOR_KEY=0xe151420c... (Ecdsa hex encoded private key string)
