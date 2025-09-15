@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hedera Decision & AI Version Ledger</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, Arial, sans-serif;
+        margin: 16px;
+        background: #11181f;
+        color: #e6e9ed;
+      }
+      h1 {
+        margin-top: 0;
+        font-size: 22px;
+      }
+      section {
+        border: 1px solid #2a3a48;
+        padding: 14px 18px;
+        border-radius: 8px;
+        margin-bottom: 22px;
+        background: #1a232b;
+      }
+      label {
+        display: inline-block;
+        width: 140px;
+        font-size: 13px;
+      }
+      input,
+      textarea {
+        padding: 4px 6px;
+        margin: 2px 6px 8px 0;
+        background: #10161d;
+        border: 1px solid #314251;
+        color: #d5dbe2;
+        border-radius: 4px;
+        font-size: 13px;
+        width: 250px;
+      }
+      textarea {
+        height: 60px;
+        resize: vertical;
+      }
+      button {
+        padding: 6px 14px;
+        background: #2563eb;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+      button:hover {
+        background: #1d4ed8;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th,
+      td {
+        padding: 6px 8px;
+        border-bottom: 1px solid #2a3a48;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #22303b;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .field {
+        display: flex;
+        flex-direction: column;
+        margin-right: 14px;
+      }
+      .status {
+        font-size: 12px;
+        opacity: 0.8;
+        margin-top: 4px;
+      }
+      #log {
+        font-size: 11px;
+        background: #10161d;
+        padding: 8px;
+        border-radius: 6px;
+        height: 140px;
+        overflow: auto;
+        line-height: 1.3;
+      }
+      .ok {
+        color: #34d399;
+      }
+      .err {
+        color: #f87171;
+      }
+      code {
+        background: #10161d;
+        padding: 2px 4px;
+        border-radius: 4px;
+      }
+      #log {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      #log div {
+        padding: 2px 0;
+        border-bottom: 1px solid #1f2a33;
+      }
+      #log div:last-child {
+        border-bottom: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Hedera Decision & AI Version Ledger</h1>
+    <p>Topic: <code id="topicDisplay">loading...</code></p>
+
+    <section>
+      <h2>Create Application</h2>
+      <div class="row">
+        <div class="field">
+          <label for="appId">Application ID</label>
+          <input id="appId" placeholder="APP-1001" />
+        </div>
+        <div class="field">
+          <label for="amount">Amount</label>
+          <input id="amount" type="number" placeholder="25000" />
+        </div>
+        <div class="field" style="align-self: flex-end">
+          <button id="createBtn">Submit</button>
+        </div>
+      </div>
+      <div id="createStatus" class="status"></div>
+    </section>
+
+    <section>
+      <h2>Override Decision</h2>
+      <div class="row">
+        <div class="field">
+          <label for="ovrAppId">Application ID</label>
+          <input id="ovrAppId" placeholder="APP-1001" />
+        </div>
+        <div class="field">
+          <label for="ovrReason">Reason</label>
+          <input id="ovrReason" placeholder="Manual risk override" />
+        </div>
+        <div class="field" style="align-self: flex-end">
+          <button id="overrideBtn">Override</button>
+        </div>
+      </div>
+      <div id="overrideStatus" class="status"></div>
+    </section>
+
+    <section>
+      <h2>Register AI Model Version</h2>
+      <div class="row">
+        <div class="field">
+          <label for="modelId">Model ID</label>
+          <input id="modelId" placeholder="EMBED-SENTIMENT" />
+        </div>
+        <div class="field">
+          <label for="modelVersion">Version</label>
+          <input id="modelVersion" placeholder="1.2.0" />
+        </div>
+        <div class="field">
+          <label for="repoUrl">Repo URL</label>
+          <input id="repoUrl" placeholder="https://github.com/acme/ml-models" />
+        </div>
+        <div class="field">
+          <label for="artifactHash">Artifact Hash (sha256)</label>
+          <input id="artifactHash" placeholder="sha256:abcd1234..." />
+        </div>
+        <div class="field">
+          <label for="modelDesc">Description</label>
+          <textarea
+            id="modelDesc"
+            placeholder="Transformer embedding model for sentiment."
+          ></textarea>
+        </div>
+        <div class="field" style="align-self: flex-end">
+          <button id="regModelBtn">Register</button>
+        </div>
+      </div>
+      <div id="modelStatus" class="status"></div>
+    </section>
+
+    <section>
+      <h2>Log AI Evaluation</h2>
+      <div class="row">
+        <div class="field">
+          <label for="evalModelId">Model ID</label>
+          <input id="evalModelId" placeholder="EMBED-SENTIMENT" />
+        </div>
+        <div class="field">
+          <label for="evalVersion">Version</label>
+          <input id="evalVersion" placeholder="1.2.0" />
+        </div>
+        <div class="field">
+          <label for="evalId">Eval ID</label>
+          <input id="evalId" placeholder="EVAL-2025-09-15-A" />
+        </div>
+        <div class="field">
+          <label for="dataset">Dataset</label>
+          <input id="dataset" placeholder="sentiment-benchmark-v3" />
+        </div>
+        <div class="field">
+          <label for="metrics">Metrics (JSON)</label>
+          <textarea
+            id="metrics"
+            placeholder='{"accuracy":0.912,"f1":0.887}'
+          ></textarea>
+        </div>
+        <div class="field">
+          <label for="passed">Passed?</label>
+          <input id="passed" type="checkbox" />
+        </div>
+        <div class="field">
+          <label for="notes">Notes</label>
+          <textarea
+            id="notes"
+            placeholder="Meets minimum prod threshold."
+          ></textarea>
+        </div>
+        <div class="field" style="align-self: flex-end">
+          <button id="logEvalBtn">Log Evaluation</button>
+        </div>
+      </div>
+      <div id="evalStatus" class="status"></div>
+    </section>
+
+    <section>
+      <h2>Live Events</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Consensus Time</th>
+            <th>Type</th>
+            <th>Primary</th>
+            <th>Secondary</th>
+            <th>Detail</th>
+          </tr>
+        </thead>
+        <tbody id="eventsBody"></tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Debug Log</h2>
+      <div id="log"></div>
+    </section>
+
+    <script src="app.js"></script>
+  </body>
+</html>
