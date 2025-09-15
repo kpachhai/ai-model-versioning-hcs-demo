@@ -214,4 +214,4 @@ curl -s "https://testnet.mirrornode.hedera.com/api/v1/topics/$TOPIC_ID/messages?
 
 ## License
 
-(Choose a license and add here, e.g. MIT)
+MIT
