@@ -1,7 +1,7 @@
 {
-  "name": "finance-hcs-demo",
+  "name": "ai-model-versioning-hcs-demo",
   "version": "1.0.0",
-  "description": "Hedera Consensus Service finance decision ledger demo",
+  "description": "Hedera Consensus Service AI Model Versioning and Provenance demo",
   "type": "module",
   "scripts": {
     "start": "node server.js"
